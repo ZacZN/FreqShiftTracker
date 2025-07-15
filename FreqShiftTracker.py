@@ -31,7 +31,7 @@ def parse_dataset(dataset):
 
 def f_tracker(dataset, path, output_location, n_samples):
     
-    max_frequencies = np.array([])
+    max_frequencies = []
 
     for filename in dataset:
         fullpath = path + filename[0]
