@@ -15,7 +15,7 @@ experiment_name = config["settings"]["experiment_name"]
 # Load program settings from config
 file_list = config["settings"]["file_list"]
 file_path = config["settings"]["file_path"]
-n_samples = config["settings"]["n_samples"]
+n_samples = int(config["settings"]["n_samples"])
 output_location = config["settings"]["output_location"]
 
 
