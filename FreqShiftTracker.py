@@ -28,10 +28,49 @@ def parse_dataset(dataset):
 
     return data_arr
 
+# reads the filename and returns a dictionary containing the time elements
+def get_file_time(filename):
+
+    # remove the RSA tag
+    parts = filename.split("-")
+    parts = parts[1]
+
+    # split by decimal point
+    parts = parts.split(".")
+
+    # add each time unit as an integer to a list, except for the .tiq file extension
+    time_units = []
+    for unit in parts:
+        try:
+            time_units.append(int(unit))
+        except ValueError:
+            pass
+
+
+    # initialise the dictionary and keys
+    time_dict = {}
+
+    dict_keys = [
+        "year",
+        "month",
+        "day",
+        "hour",
+        "minute",
+        "second",
+        "millisecond"
+    ]
+
+    # add time units with keys to the dictionary
+    for unit in range(len(time_units)):
+        time_dict.update({dict_keys[unit] : time_units[unit]})
+
+    return time_dict
+
 
 def f_tracker(dataset, path, output_location, n_samples):
     
     max_frequencies = []
+    time_elements = []
 
     for filename in dataset:
         fullpath = path + filename[0]
@@ -52,12 +91,14 @@ def f_tracker(dataset, path, output_location, n_samples):
         f_max = ff[0][f_max_index]
         max_frequencies.append(f_max)
 
+        time_elements.append(get_file_time(filename[0]))
+
 
     output_name = f"{experiment_name}_{t_start}-{t_end}_FMAX"
 
     print(f"Saving array containing maximum frequencies between {t_start} and {t_end} to file {output_name}.npz in location {output_location}")
     
-    np.savez(output_location + output_name + ".npz", max_frequencies=max_frequencies)
+    np.savez(output_location + output_name + ".npz", max_frequencies=max_frequencies, time_elements=time_elements)
 
 
 def main():
