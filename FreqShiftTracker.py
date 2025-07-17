@@ -94,7 +94,7 @@ def f_tracker(dataset, path, output_location, n_samples):
         time_elements.append(get_file_time(filename[0]))
 
 
-    output_name = f"{experiment_name}_{t_start}-{t_end}_FMAX"
+    output_name = f"{experiment_name}_{t_start}-{t_end}_FMAX-{str(n_samples)}"
 
     print(f"Saving array containing maximum frequencies between {t_start} and {t_end} to file {output_name}.npz in location {output_location}")
     
